@@ -30,3 +30,12 @@ app.get("/states", async (request, response) => {
   const states = await db.all(getStatesQuery);
   response.send(states);
 });
+
+app.get("/states/:stateId", async (request, response) => {
+  const { stateId } = request.params;
+  const getStateById = `
+    select * from state where state_id=?;
+    `;
+  const state = await db.get(getStateById, stateId);
+  response.send(state);
+});
